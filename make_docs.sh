@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # Build the docs and move them to the correct place
-rm -r docs/sliderool
+rm -r docs
 dune clean && dune build @doc
-cp -r _build/default/_doc/_html/sliderool docs/sliderool
+cp -r _build/default/_doc/_html docs
