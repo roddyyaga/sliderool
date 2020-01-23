@@ -95,4 +95,6 @@ let print_parse lexbuf =
     |> List.map token_to_string
     |> String.concat "\n"
     |> print_endline
+
+let parse_string s = parse (Lexing.from_string s)
 }

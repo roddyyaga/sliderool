@@ -1,8 +1,6 @@
 open Core
 open Lib.Log_format_lexer
 
-let parse_string s = parse (Lexing.from_string s)
-
 let string_concat_gen first_gen second_gen =
   let open QCheck.Gen in
   map2 (fun x y -> x ^ y) first_gen second_gen
@@ -118,32 +116,32 @@ let debug_print ts parsed =
 let token_list_quickcheck =
   QCheck.Test.make ~name:"token list quickcheck" ~count:10000
     arbitrary_token_list (fun ts ->
-      let parsed = parse_string (from_list ts) in
+      let parsed = Lib.Log_format_lexer.parse_string (from_list ts) in
       debug_print ts parsed;
       ts = parsed)
 
 let test_empty () =
   Alcotest.(check string)
     "empty token list"
-    (from_list (parse_string ""))
+    (from_list (Lib.Log_format_lexer.parse_string ""))
     (from_list [ EOF ])
 
 let test_initial_backslash () =
   Alcotest.check_raises "initial backslash error"
     (ParseError Errors.initial_backslash) (fun () ->
-      let _ = parse_string "\\abcdefg" in
+      let _ = Lib.Log_format_lexer.parse_string "\\abcdefg" in
       ())
 
 let test_string_backslash () =
   Alcotest.check_raises "string backslash error"
     (ParseError Errors.string_backslash) (fun () ->
-      let _ = parse_string "gfedcba\\abcdefg" in
+      let _ = Lib.Log_format_lexer.parse_string "gfedcba\\abcdefg" in
       ())
 
 let test_variable_backslash () =
   Alcotest.check_raises "string backslash error"
     (ParseError Errors.variable_backslash) (fun () ->
-      let _ = parse_string "$gfedcba\\abcdefg" in
+      let _ = Lib.Log_format_lexer.parse_string "$gfedcba\\abcdefg" in
       ())
 
 let () =
