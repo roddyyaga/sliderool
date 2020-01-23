@@ -1,6 +1,7 @@
 (executables
 (names sliderool)
 (public_names sliderool)
-(libraries core)
+(libraries core
+lib)
 (package sliderool)
 )

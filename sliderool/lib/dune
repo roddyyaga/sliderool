@@ -1,0 +1,8 @@
+(library
+(name lib)
+(libraries core re)
+(inline_tests)
+(preprocess (pps ppx_inline_test))
+)
+
+(ocamllex log_format_lexer)
