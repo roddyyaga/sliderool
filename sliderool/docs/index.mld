@@ -1,2 +1,4 @@
 {0 Sliderool}
-Sliderool is a simple tool for analytics of server logs
+Sliderool is a simple tool for analytics of server logs.
+
+{{!log_format_patterns} Documentation for log format patterns}

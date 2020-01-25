@@ -19,6 +19,7 @@ let build token_list variable_patterns =
   in
   String.concat (List.map ~f:token_to_regex token_list)
 
+(** Build a log line matcher from a log format and optionally a map specifying types of variables in the log format. *)
 let build_matcher log_format ?variable_patterns =
   let token_list = Log_format_lexer.parse_string log_format in
   let variable_patterns =

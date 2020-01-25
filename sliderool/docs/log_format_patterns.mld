@@ -1,0 +1,22 @@
+{0 Sliderool log format patterns}
+
+Sliderool allows you to specify the format of lines in your logs, using patterns with a similar syntax to {{:
+https://docs.nginx.com/nginx/admin-guide/monitoring/logging/} NGINX log formats}.
+
+A Sliderool log pattern consists of variables, which are [$] followed by one or more characters that are either
+alphanumeric or underscores, and the remainder of the pattern, which is treated as an {{:
+https://caml.inria.fr/pub/docs/manual-ocaml/libref/Str.html#VALregexp} OCaml Str regular expressions}. It is possible to
+escape [$] with a backslash so it is treated as a regular expression not the start of a variable; this means that actual
+backslashes must also be escaped.
+
+Example:
+["$address - $user \\[$timestamp\\] "$request_type $route $protocol" $status $body_bytes_sent "$referrer" "$user_agent"]
+is the pattern for the default NGINX format. As an OCaml string literal, the backslashes and quotes would need to be
+escaped.
+
+Gotchas:
+- Since [\[] and [\]] are special characters in regular expressions, they must be escaped for log formats that contain
+  them (for instance in the example format above).
+- OCaml Str regular expressions have an unusual syntax that requires [(], [)] and [|] to be escaped with backslashes
+  when used as metacharacters. Due to the combination of escaping by the OCaml string parser and Sliderool, this means
+  preceding them with four backslashes if they you are writing a pattern as an OCaml double-quoted string literal.
